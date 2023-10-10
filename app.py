@@ -4,20 +4,20 @@ from transformers import pipeline
 load_dotenv(find_dotenv())
 
 
-# img2text
-def img2text(url):
+def img2text(path):
     image_to_text = pipeline(
         "image-to-text", model="Salesforce/blip-image-captioning-large"
     )
 
-    text = image_to_text(url)[0]["generated_text"]
+    text = image_to_text(path)[0]["generated_text"]
 
     print(text)
 
     return text
 
 
-img2text("photo.jpg")
+img2text("hambuger.png")
+# img2text("photo.jpg")
 
 # lim
 
