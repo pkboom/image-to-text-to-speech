@@ -1,3 +1,5 @@
+https://www.youtube.com/watch?v=_j7JEDWuqLE&ab_channel=AIJason
+
 pip install tensorflow
 
 pip install tensorflow-metal
