@@ -8,6 +8,7 @@ import os
 import streamlit as st
 
 load_dotenv(find_dotenv())
+
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 
