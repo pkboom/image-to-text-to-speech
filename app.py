@@ -1,6 +1,8 @@
 from dotenv import find_dotenv, load_dotenv
 from transformers import pipeline
-from langchain import PromptTemplate, LLMChain, OpenAI
+from langchain.llms import OpenAI
+from langchain.chains import LLMChain
+from langchain.prompts import PromptTemplate
 import requests
 import os
 import streamlit as st
@@ -9,7 +11,6 @@ load_dotenv(find_dotenv())
 HUGGINGFACEHUB_API_TOKEN = os.getenv("HUGGINGFACEHUB_API_TOKEN")
 
 
-# img2text
 def img2text(path):
     image_to_text = pipeline(
         "image-to-text", model="Salesforce/blip-image-captioning-large"
@@ -22,7 +23,6 @@ def img2text(path):
     return text
 
 
-# lim
 def generate_story(scenario):
     template = """
     You are a story teller;
@@ -52,6 +52,8 @@ def text2speech(message):
         "https://api-inference.huggingface.co/models/espnet/kan-bayashi_ljspeech_vits"
     )
 
+    # API_URL = "https://api-inference.huggingface.co/models/suno/bark"
+
     headers = {"Authorization": f"Bearer {HUGGINGFACEHUB_API_TOKEN}"}
 
     payload = {"inputs": message}
@@ -62,9 +64,9 @@ def text2speech(message):
         f.write(response.content)
 
 
-scenario = img2text("hambuger.png")
-story = generate_story(scenario)
-text2speech(story)
+# scenario = img2text("hambuger.png")
+# story = generate_story(scenario)
+# text2speech(story)
 
 
 def main():
@@ -75,8 +77,6 @@ def main():
     uploaded_file = st.file_uploader("Choose an image...", type="jpg")
 
     if uploaded_file is not None:
-        print(uploaded_file)
-
         bytes_data = uploaded_file.getvalue()
 
         with open(uploaded_file.name, "wb") as file:
