@@ -1,13 +1,25 @@
-import tensorflow as tf
+from contextlib import contextmanager
+from nicegui import ui
+import asyncio
 
-cifar = tf.keras.datasets.cifar100
-(x_train, y_train), (x_test, y_test) = cifar.load_data()
-model = tf.keras.applications.ResNet50(
-    include_top=True,
-    weights=None,
-    input_shape=(32, 32, 3),
-    classes=100,)
 
-loss_fn = tf.keras.losses.SparseCategoricalCrossentropy(from_logits=False)
-model.compile(optimizer="adam", loss=loss_fn, metrics=["accuracy"])
-model.fit(x_train, y_train, epochs=5, batch_size=64)
+@contextmanager
+def spinner() -> None:
+    spinner = ui.spinner()
+
+    try:
+        yield
+    finally:
+        spinner.set_visibility(False)
+
+
+async def slow_operation() -> None:
+    with spinner():
+        print("in slow operation")
+        await asyncio.sleep(3)
+        print("after sleep")
+
+
+ui.button("Run spinner", on_click=slow_operation)
+
+ui.run()

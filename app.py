@@ -100,5 +100,5 @@ def main():
         st.audio("audio.flac")
 
 
-if __name__ == "__main__":
-    main()
+# if __name__ == "__main__":
+#     main()
